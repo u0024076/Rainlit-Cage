@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>籠夜雨</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 75% 15%, rgba(160,180,190,.10), transparent 35%),
+        linear-gradient(155deg, #111820 0%, #0d1217 48%, #07090c 100%);
+    color: #eee;
+    font-family: "Noto Serif TC", "Noto Serif JP", "Yu Mincho", "PingFang TC", serif;
+}
+
+
+/* =========================
+   背景
+========================= */
+
+.background {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: -10;
+}
+
+.moon {
+    position: absolute;
+    width: 520px;
+    height: 520px;
+    top: -200px;
+    right: -80px;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(210,225,230,.14),
+        rgba(150,170,180,.04) 40%,
+        transparent 70%
+    );
+    filter: blur(15px);
+}
+
+.fog {
+    position: absolute;
+    width: 140%;
+    height: 55%;
+    left: -20%;
+    bottom: -10%;
+    background: linear-gradient(
+        to top,
+        rgba(140,155,160,.10),
+        rgba(90,110,120,.025),
+        transparent
+    );
+    filter: blur(35px);
+    animation: fogMove 16s ease-in-out infinite alternate;
+}
+
+@keyframes fogMove {
+    from {
+        transform: translateX(-3%);
+    }
+    to {
+        transform: translateX(3%);
+    }
+}
+
+
+/* 籠子的陰影 */
+
+.cage {
+    position: absolute;
+    inset: -20%;
+    opacity: .055;
+    background: repeating-linear-gradient(
+        103deg,
+        transparent 0,
+        transparent 75px,
+        rgba(220,230,235,.7) 77px,
+        rgba(220,230,235,.7) 79px,
+        transparent 81px,
+        transparent 155px
+    );
+    transform: rotate(-4deg);
+}
+
+
+/* 港口燈 */
+
+.harbor {
+    position: absolute;
+    right: 10%;
+    bottom: 17%;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #d5bd91;
+    box-shadow:
+        0 0 8px #d5bd91,
+        -80px 10px 6px #9d8b6d,
+        -180px -5px 5px #c4aa80,
+        90px 18px 5px #80745f;
+    opacity: .55;
+    animation: blink 4s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: .3;
+    }
+    50% {
+        opacity: .8;
+    }
+}
+
+
+/* =========================
+   雨
+========================= */
+
+.rain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.drop {
+    position: absolute;
+    top: -120px;
+    width: 1px;
+    background: linear-gradient(
+        transparent,
+        rgba(205,220,225,.4)
+    );
+    transform: rotate(10deg);
+    animation: rainFall linear infinite;
+}
+
+@keyframes rainFall {
+    from {
+        transform: translateY(-120px) translateX(0) rotate(10deg);
+    }
+    to {
+        transform: translateY(120vh) translateX(-170px) rotate(10deg);
+    }
+}
+
+
+/* =========================
+   主版面
+========================= */
+
+.app {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 38% 62%;
+    padding: 6vh 7vw;
+    gap: 50px;
+}
+
+
+/* =========================
+   左側
+========================= */
+
+.left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.small-title {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: .4em;
+    opacity: .4;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-weight: 400;
+    font-size: clamp(48px, 6vw, 82px);
+    letter-spacing: .18em;
+    line-height: 1;
+    text-shadow: 0 0 30px rgba(220,230,235,.12);
+}
+
+.roman {
+    margin-top: 16px;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: .4em;
+    opacity: .35;
+}
+
+.decor-line {
+    width: 75px;
+    height: 1px;
+    margin: 35px 0;
+    background: linear-gradient(
+        to right,
+        rgba(255,255,255,.6),
+        transparent
+    );
+}
+
+
+/* =========================
+   播放器
+========================= */
+
+.player {
+    width: min(420px, 100%);
+    padding: 22px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,.07);
+    background: rgba(15,22,27,.40);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 20px 70px rgba(0,0,0,.25);
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+button {
+    border: none;
+    background: none;
+    color: white;
+    cursor: pointer;
+    opacity: .7;
+    transition: .3s;
+}
+
+button:hover {
+    opacity: 1;
+}
+
+.play {
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 50%;
+    font-size: 15px;
+}
+
+.skip {
+    font-size: 11px;
+}
+
+.progress {
+    appearance: none;
+    width: 100%;
+    height: 2px;
+    margin-top: 20px;
+    background: rgba(255,255,255,.15);
+    cursor: pointer;
+}
+
+.progress::-webkit-slider-thumb {
+    appearance: none;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: white;
+}
+
+.time {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 9px;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: .1em;
+    opacity: .4;
+}
+
+
+/* =========================
+   歌詞
+========================= */
+
+.lyrics-window {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 15%,
+        black 85%,
+        transparent 100%
+    );
+
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 15%,
+        black 85%,
+        transparent 100%
+    );
+}
+
+.lyrics {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transition: transform .7s cubic-bezier(.25,.8,.25,1);
+}
+
+.lyric {
+    min-height: 105px;
+    padding: 17px 20px;
+    opacity: .14;
+    transform: scale(.94);
+    transform-origin: left center;
+    transition:
+        opacity .5s ease,
+        transform .5s ease;
+    cursor: pointer;
+}
+
+.lyric.near {
+    opacity: .35;
+}
+
+.lyric.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+
+/* 日文歌詞 */
+
+.jp {
+    font-family: "Noto Serif JP", "Yu Mincho", serif;
+    font-size: clamp(20px, 2vw, 29px);
+    line-height: 1.5;
+    letter-spacing: .07em;
+}
+
+.lyric.active .jp {
+    text-shadow: 0 0 18px rgba(220,230,235,.18);
+}
+
+
+/* 中文翻譯 */
+
+.zh {
+    margin-top: 7px;
+    font-size: clamp(13px, 1.1vw, 16px);
+    line-height: 1.6;
+    letter-spacing: .08em;
+    color: rgba(220,225,230,.55);
+}
+
+.lyric.active .zh {
+    color: rgba(235,240,240,.82);
+}
+
+
+/* =========================
+   手機
+========================= */
+
+@media (max-width: 800px) {
+
+    body {
+        overflow: auto;
+    }
+
+    .app {
+        height: auto;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding: 45px 25px;
+        gap: 30px;
+    }
+
+    .left {
+        min-height: 320px;
+        justify-content: flex-end;
+    }
+
+    h1 {
+        font-size: 52px;
+    }
+
+    .player {
+        width: 100%;
+    }
+
+    .lyrics-window {
+        height: 55vh;
+        min-height: 450px;
+    }
+
+    .lyric {
+        min-height: 95px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- 背景 -->
+
+<div class="background">
+    <div class="moon"></div>
+    <div class="fog"></div>
+    <div class="cage"></div>
+    <div class="harbor"></div>
+    <div class="rain" id="rain"></div>
+</div>
+
+
+<!-- 主畫面 -->
+
+<main class="app">
+
+
+    <!-- 左邊 -->
+
+    <section class="left">
+
+        <div class="small-title">
+            CHARACTER SONG
+        </div>
+
+        <h1>
+            籠夜雨
+        </h1>
+
+        <div class="roman">
+            KAGO YOAME
+        </div>
+
+        <div class="decor-line"></div>
+
+
+        <!-- 播放器 -->
+
+        <div class="player">
+
+            <audio
+                id="audio"
+                src="籠夜雨.mp3"
+                loop>
+            </audio>
+
+            <div class="controls">
+
+                <button
+                    class="skip"
+                    id="back">
+                    −10
+                </button>
+
+                <button
+                    class="play"
+                    id="play">
+                    ▶
+                </button>
+
+                <button
+                    class="skip"
+                    id="forward">
+                    +10
+                </button>
+
+            </div>
+
+
+            <input
+                id="progress"
+                class="progress"
+                type="range"
+                min="0"
+                max="100"
+                value="0">
+
+
+            <div class="time">
+
+                <span id="current">
+                    00:00
+                </span>
+
+                <span id="duration">
+                    00:00
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- 右邊歌詞 -->
+
+    <section class="lyrics-window">
+
+        <div
+            class="lyrics"
+            id="lyrics">
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<script>
+
+
+/* =========================================================
+   ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+              你的 LRC 歌詞貼在這裡
+
+   格式：
+
+   [00:18.50]日文歌詞
+   [00:18.50]中文翻譯
+
+   同一個時間：
+   第一行 = 日文
+   第二行 = 中文
+
+   ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+========================================================= */
+
+
+const LRC = `
+
+[00:17.55]白檀の香を　身にまとい
+[00:17.55]白檀的香氣　輕落在衣襟
+[00:24.17]鏡に笑みを　ひとつ描く
+[00:24.17]鏡中的笑意　又描深一筆
+[00:31.03]黒髪を梳いて　簪を挿す
+[00:31.03]梳過一頭黑髮　簪進髮髻
+[00:32.79]煙管の灰を　夜に落とす
+[00:32.79]煙管落下的灰　散進夜裡
+[00:41.40]帳面に並ぶ　白い桁
+[00:41.40]帳本之間　排滿一行行數字
+[00:48.43]算盤の珠を　また弾く
+[00:48.43]算盤的珠子　又輕輕撥起
+[00:51.70]自由はすぐに　見えるのに
+[00:51.70]自由明明　已經近在眼底
+[00:55.29]最後の一行
+[00:55.29]最後那一行
+[00:57.60]書けない
+[00:57.60]卻始終寫不下去
+[00:59.60]籠の中だと　言わないで
+[00:59.60]別說我　困在這裡
+[01:02.55]そんな言葉は　ただ嫌い
+[01:02.55]那樣的話　我不願聽
+[01:05.98]鍵はこの手に　あるのなら
+[01:05.98]鑰匙仍在　我的掌心
+[01:09.41]飛ばないだけよ　飛べるから
+[01:09.41]翅膀還在　只是沒有飛起
+[01:13.32]雨の向こうへ　船は行く
+[01:13.32]船穿過雨幕　漸漸遠離
+[01:18.67]これが私の　選んだ未来
+[01:18.67]這就是我　親手選的結局
+[01:53.53]雨降る夜に　指を想う
+[01:53.53]雨落的夜裡　又想起那雙手
+[02:00.39]触れない指が　胸に残る
+[02:00.39]明明沒有觸碰　卻記了那麼久
+[02:07.65]大阪の雨　屋根を打ち
+[02:07.65]大阪的雨　敲著熟悉的窗口
+[02:13.24]基隆の雨　海を隠す
+[02:13.24]基隆的雨　把海藏在霧後
+[02:21.22]汽笛がひとつ　夜を裂く
+[02:21.22]一聲汽笛　劃破沉寂
+[02:24.41]鍵なら今も　手の中に
+[02:24.41]鑰匙如今　仍握在手裡
+[02:27.84]帰る場所さえ　見えぬまま
+[02:27.84]連回去的地方　都看不清晰
+[02:30.79]行き先だけは
+[02:30.79]只是離開以後　要去哪裡
+[02:33.59]書けない
+[02:33.59]最後一行　仍寫不下去
+[02:35.58]籠の中だと　言わないで
+[02:35.58]別說我　困在這裡
+[02:38.53]そんな言葉は　ただ嫌い
+[02:38.53]那樣的話　我不願聽
+[02:41.96]鍵はこの手に　あるのなら
+[02:41.96]鑰匙仍在　我的掌心
+[02:44.60]飛べるはずなら　なぜ飛ばない
+[02:44.60]既然還能飛　為何沒有飛起
+[02:49.30]雨の向こうへ　船は行く
+[02:49.30]船穿過雨幕　漸漸遠離
+[02:54.65]それでも見てる　遠い未来
+[02:54.65]而我仍望著　遙遠的天際
+[03:02.79]海の彼方は　測れても
+[03:02.79]海有多遠　還能算清
+[03:05.98]帰る場所だけ　測れない
+[03:05.98]回去的地方　卻無法丈量距離
+[03:09.41]道なら今も　見えている
+[03:09.41]前方的路　明明如此清晰
+[03:12.44]それでも私は
+[03:12.44]可我最後
+[03:14.76]ここにいる
+[03:14.76]仍留在這裡
+[03:21.46]飛ばない鳥か
+[03:21.46]是不願飛的鳥
+[03:24.89]飛べない鳥か
+[03:24.89]還是已經飛不起
+[03:35.34]雨が止んだら
+[03:35.34]等這場雨停了
+[03:37.50]港を見に行こうか
+[03:37.50]再去港口看一場雨
+
+
+
+把你的中日 LRC 歌詞貼在這裡
+
+
+
+`;
+
+
+/* =========================================================
+                  ↑↑↑ 歌詞到這裡結束 ↑↑↑
+========================================================= */
+
+
+
+const audio = document.getElementById("audio");
+const playButton = document.getElementById("play");
+const progress = document.getElementById("progress");
+const currentLabel = document.getElementById("current");
+const durationLabel = document.getElementById("duration");
+const lyricsElement = document.getElementById("lyrics");
+const backButton = document.getElementById("back");
+const forwardButton = document.getElementById("forward");
+
+let lyricsData = [];
+let currentIndex = -1;
+
+
+/* =========================
+   解析 LRC
+========================= */
+
+function parseLRC(text) {
+
+    const lines = text.split(/\r?\n/);
+
+    const map = new Map();
+
+    lines.forEach(line => {
+
+        const match = line.match(
+            /\[(\d{1,2}):(\d{2})(?:\.(\d{1,3}))?\](.*)/
+        );
+
+        if (!match) {
+            return;
+        }
+
+        const minutes = parseInt(match[1]);
+        const seconds = parseInt(match[2]);
+
+        let milliseconds = 0;
+
+        if (match[3]) {
+
+            const part = match[3];
+
+            if (part.length === 1) {
+                milliseconds = parseInt(part) * 100;
+            }
+
+            else if (part.length === 2) {
+                milliseconds = parseInt(part) * 10;
+            }
+
+            else {
+                milliseconds = parseInt(part.slice(0, 3));
+            }
+        }
+
+        const time =
+            minutes * 60 +
+            seconds +
+            milliseconds / 1000;
+
+        const textContent =
+            match[4].trim();
+
+        if (!textContent) {
+            return;
+        }
+
+        const key =
+            time.toFixed(3);
+
+        if (!map.has(key)) {
+
+            map.set(key, {
+                time: time,
+                lines: []
+            });
+
+        }
+
+        map.get(key)
+            .lines
+            .push(textContent);
+
+    });
+
+
+    return Array
+        .from(map.values())
+        .map(item => ({
+            time: item.time,
+            jp: item.lines[0] || "",
+            zh: item.lines[1] || ""
+        }))
+        .sort((a, b) => a.time - b.time);
+
+}
+
+
+/* =========================
+   防止文字破壞 HTML
+========================= */
+
+function escapeHTML(text) {
+
+    return text
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+/* =========================
+   建立歌詞
+========================= */
+
+function renderLyrics() {
+
+    lyricsElement.innerHTML = "";
+
+    lyricsData.forEach((item, index) => {
+
+        const line =
+            document.createElement("div");
+
+        line.className =
+            "lyric";
+
+        line.innerHTML = `
+            <div class="jp">
+                ${escapeHTML(item.jp)}
+            </div>
+
+            <div class="zh">
+                ${escapeHTML(item.zh)}
+            </div>
+        `;
+
+
+        line.addEventListener(
+            "click",
+            () => {
+
+                audio.currentTime =
+                    item.time;
+
+                audio.play();
+
+            }
+        );
+
+
+        lyricsElement
+            .appendChild(line);
+
+    });
+
+}
+
+
+/* =========================
+   更新目前歌詞
+========================= */
+
+function updateLyrics() {
+
+    if (!lyricsData.length) {
+        return;
+    }
+
+    const time =
+        audio.currentTime;
+
+    let index = -1;
+
+
+    for (
+        let i = lyricsData.length - 1;
+        i >= 0;
+        i--
+    ) {
+
+        if (time >= lyricsData[i].time) {
+
+            index = i;
+            break;
+
+        }
+
+    }
+
+
+    if (index === currentIndex) {
+        return;
+    }
+
+
+    currentIndex =
+        index;
+
+
+    const lines =
+        document.querySelectorAll(".lyric");
+
+
+    lines.forEach((line, i) => {
+
+        line.classList.remove(
+            "active",
+            "near"
+        );
+
+
+        if (i === index) {
+
+            line.classList.add(
+                "active"
+            );
+
+        }
+
+
+        else if (
+            i === index - 1 ||
+            i === index + 1
+        ) {
+
+            line.classList.add(
+                "near"
+            );
+
+        }
+
+    });
+
+
+    if (
+        index >= 0 &&
+        lines[index]
+    ) {
+
+        centerLyric(
+            lines[index]
+        );
+
+    }
+
+}
+
+
+/* =========================
+   歌詞自動置中
+========================= */
+
+function centerLyric(line) {
+
+    const windowElement =
+        document.querySelector(
+            ".lyrics-window"
+        );
+
+
+    const center =
+        windowElement.clientHeight / 2;
+
+
+    const lineCenter =
+        line.offsetTop +
+        line.offsetHeight / 2;
+
+
+    lyricsElement.style.transform =
+        `translateY(${center - lineCenter}px)`;
+
+}
+
+
+/* =========================
+   播放
+========================= */
+
+playButton.addEventListener(
+    "click",
+    () => {
+
+        if (audio.paused) {
+
+            audio.play();
+
+        }
+
+        else {
+
+            audio.pause();
+
+        }
+
+    }
+);
+
+
+audio.addEventListener(
+    "play",
+    () => {
+
+        playButton.textContent =
+            "❚❚";
+
+    }
+);
+
+
+audio.addEventListener(
+    "pause",
+    () => {
+
+        playButton.textContent =
+            "▶";
+
+    }
+);
+
+
+/* =========================
+   前後 10 秒
+========================= */
+
+backButton.addEventListener(
+    "click",
+    () => {
+
+        audio.currentTime =
+            Math.max(
+                0,
+                audio.currentTime - 10
+            );
+
+    }
+);
+
+
+forwardButton.addEventListener(
+    "click",
+    () => {
+
+        audio.currentTime =
+            Math.min(
+                audio.duration || Infinity,
+                audio.currentTime + 10
+            );
+
+    }
+);
+
+
+/* =========================
+   音樂載入
+========================= */
+
+audio.addEventListener(
+    "loadedmetadata",
+    () => {
+
+        durationLabel.textContent =
+            formatTime(
+                audio.duration
+            );
+
+    }
+);
+
+
+/* =========================
+   播放進度
+========================= */
+
+audio.addEventListener(
+    "timeupdate",
+    () => {
+
+        if (
+            Number.isFinite(
+                audio.duration
+            )
+        ) {
+
+            progress.value =
+                (
+                    audio.currentTime /
+                    audio.duration
+                ) * 100;
+
+        }
+
+
+        currentLabel.textContent =
+            formatTime(
+                audio.currentTime
+            );
+
+
+        updateLyrics();
+
+    }
+);
+
+
+/* =========================
+   拖動進度條
+========================= */
+
+progress.addEventListener(
+    "input",
+    () => {
+
+        if (
+            !Number.isFinite(
+                audio.duration
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        audio.currentTime =
+            (
+                progress.value / 100
+            ) *
+            audio.duration;
+
+    }
+);
+
+
+/* =========================
+   時間格式
+========================= */
+
+function formatTime(seconds) {
+
+    if (
+        !Number.isFinite(seconds)
+    ) {
+
+        return "00:00";
+
+    }
+
+
+    const minute =
+        Math.floor(
+            seconds / 60
+        );
+
+
+    const second =
+        Math.floor(
+            seconds % 60
+        );
+
+
+    return (
+        String(minute)
+            .padStart(2, "0")
+        +
+        ":"
+        +
+        String(second)
+            .padStart(2, "0")
+    );
+
+}
+
+
+/* =========================
+   雨
+========================= */
+
+function createRain() {
+
+    const rain =
+        document.getElementById(
+            "rain"
+        );
+
+
+    for (
+        let i = 0;
+        i < 85;
+        i++
+    ) {
+
+        const drop =
+            document.createElement(
+                "div"
+            );
+
+
+        drop.className =
+            "drop";
+
+
+        drop.style.left =
+            Math.random() * 120 + "%";
+
+
+        drop.style.height =
+            (
+                40 +
+                Math.random() * 90
+            ) + "px";
+
+
+        drop.style.opacity =
+            (
+                .05 +
+                Math.random() * .25
+            );
+
+
+        drop.style.animationDuration =
+            (
+                .7 +
+                Math.random() * 1.4
+            ) + "s";
+
+
+        drop.style.animationDelay =
+            (
+                Math.random() * -5
+            ) + "s";
+
+
+        rain.appendChild(
+            drop
+        );
+
+    }
+
+}
+
+
+/* =========================
+   啟動
+========================= */
+
+lyricsData =
+    parseLRC(LRC);
+
+renderLyrics();
+
+createRain();
+
+
+</script>
+
+</body>
+</html>
