@@ -18,10 +18,12 @@ html, body {
 }
 
 body {
-    overflow: hidden;
+    idth: 100%;
+    min-height: 100vh; /* 改成 min-height，確保頁面再長都能填滿背景 */
     background:
         radial-gradient(circle at 75% 15%, rgba(160,180,190,.10), transparent 35%),
         linear-gradient(155deg, #111820 0%, #0d1217 48%, #07090c 100%);
+    background-attachment: fixed; /* 讓背景漸層釘在螢幕上，不隨滾動斷層 */
     color: #eee;
     font-family: "Noto Serif TC", "Noto Serif JP", "Yu Mincho", "PingFang TC", serif;
 }
@@ -368,8 +370,17 @@ button:hover { opacity: 1; }
 }
 
 @media (max-width: 800px) {
-    body { overflow: auto; }
-    .app {
+    body {
+        overflow-y: auto; /* 允許垂直滾動 */
+    }
+    .background {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        inset: 0;
+        z-index: -10;
+    }
+   .app {
         height: auto;
         min-height: 100vh;
         display: flex;
