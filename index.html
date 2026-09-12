@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>籠夜雨</title>
 
 <style>
@@ -26,7 +25,6 @@ body {
     color: #eee;
     font-family: "Noto Serif TC", "Noto Serif JP", "Yu Mincho", "PingFang TC", serif;
 }
-
 
 /* =========================
    背景
@@ -72,16 +70,9 @@ body {
 }
 
 @keyframes fogMove {
-    from {
-        transform: translateX(-3%);
-    }
-    to {
-        transform: translateX(3%);
-    }
+    from { transform: translateX(-3%); }
+    to { transform: translateX(3%); }
 }
-
-
-/* 籠子的陰影 */
 
 .cage {
     position: absolute;
@@ -98,9 +89,6 @@ body {
     );
     transform: rotate(-4deg);
 }
-
-
-/* 港口燈 */
 
 .harbor {
     position: absolute;
@@ -120,14 +108,9 @@ body {
 }
 
 @keyframes blink {
-    0%, 100% {
-        opacity: .3;
-    }
-    50% {
-        opacity: .8;
-    }
+    0%, 100% { opacity: .3; }
+    50% { opacity: .8; }
 }
-
 
 /* =========================
    雨
@@ -152,14 +135,9 @@ body {
 }
 
 @keyframes rainFall {
-    from {
-        transform: translateY(-120px) translateX(0) rotate(10deg);
-    }
-    to {
-        transform: translateY(120vh) translateX(-170px) rotate(10deg);
-    }
+    from { transform: translateY(-120px) translateX(0) rotate(10deg); }
+    to { transform: translateY(120vh) translateX(-170px) rotate(10deg); }
 }
-
 
 /* =========================
    主版面
@@ -173,11 +151,6 @@ body {
     padding: 6vh 7vw;
     gap: 50px;
 }
-
-
-/* =========================
-   左側
-========================= */
 
 .left {
     display: flex;
@@ -199,10 +172,10 @@ h1 {
     letter-spacing: .18em;
     line-height: 1;
     text-shadow:
-    0 0 5px rgba(235,247,250,.95),
-    0 0 12px rgba(205,230,238,.75),
-    0 0 26px rgba(170,210,225,.48),
-    0 0 50px rgba(125,180,205,.25);
+        0 0 5px rgba(235,247,250,.95),
+        0 0 12px rgba(205,230,238,.75),
+        0 0 26px rgba(170,210,225,.48),
+        0 0 50px rgba(125,180,205,.25);
 }
 
 .roman {
@@ -223,7 +196,6 @@ h1 {
         transparent
     );
 }
-
 
 /* =========================
    播放器
@@ -254,9 +226,7 @@ button {
     transition: .3s;
 }
 
-button:hover {
-    opacity: 1;
-}
+button:hover { opacity: 1; }
 
 .play {
     width: 44px;
@@ -266,9 +236,7 @@ button:hover {
     font-size: 15px;
 }
 
-.skip {
-    font-size: 11px;
-}
+.skip { font-size: 11px; }
 
 .progress {
     appearance: none;
@@ -297,17 +265,14 @@ button:hover {
     opacity: .4;
 }
 
-
 /* =========================
-   動態歌詞區
+   動態歌詞區（修復關鍵）
 ========================= */
 
 .lyrics-window {
     position: relative;
     height: 100%;
     overflow: hidden;
-
-    /* 上下漸隱 */
     -webkit-mask-image: linear-gradient(
         to bottom,
         transparent 0%,
@@ -317,7 +282,6 @@ button:hover {
         rgba(0,0,0,.4) 88%,
         transparent 100%
     );
-
     mask-image: linear-gradient(
         to bottom,
         transparent 0%,
@@ -329,205 +293,82 @@ button:hover {
     );
 }
 
-
-/* 整組歌詞 */
-
 .lyrics {
     position: absolute;
     width: 100%;
     top: 0;
-
     will-change: transform;
-
-    transition:
-        transform 0.85s
-        cubic-bezier(.22,.8,.25,1);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
-
-/* 每一句 */
 
 .lyric {
-    min-height: 108px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    padding: 15px 24px;
-
-    opacity: 0.10;
-
-    transform:
-        translateX(-8px)
-        scale(.94);
-
-    transform-origin:
-        left center;
-
-    filter: blur(.25px);
-
+    position: relative;
+    padding: 20px 24px;
+    opacity: 0.15;
+    transform: scale(0.96);
+    transform-origin: left center;
     cursor: pointer;
-
-    transition:
-        opacity .65s ease,
-        transform .65s ease,
-        filter .65s ease;
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
-
-
-/* =========================
-   日文
-========================= */
 
 .jp {
-    font-family:
-        "Noto Serif JP",
-        "Yu Mincho",
-        serif;
-
-    font-size:
-        clamp(21px, 2.15vw, 31px);
-
+    font-family: "Noto Serif JP", "Yu Mincho", serif;
+    font-size: clamp(21px, 2.15vw, 31px);
     font-weight: 400;
-
-    line-height: 1.55;
-
+    line-height: 1.4;
     letter-spacing: .08em;
-
-    color:
-        rgba(205,215,220,.48);
-
-    transition:
-        color .65s ease,
-        text-shadow .65s ease,
-        transform .65s ease;
+    color: rgba(205,215,220,.6);
+    transition: color 0.5s ease, text-shadow 0.5s ease;
 }
-
-
-/* =========================
-   中文
-========================= */
 
 .zh {
-    margin-top: 8px;
-
-    font-family:
-        "Noto Serif TC",
-        "PingFang TC",
-        serif;
-
-    font-size:
-        clamp(13px, 1.15vw, 17px);
-
-    line-height: 1.65;
-
+    margin-top: 6px;
+    font-family: "Noto Serif TC", "PingFang TC", serif;
+    font-size: clamp(13px, 1.15vw, 17px);
+    line-height: 1.5;
     letter-spacing: .1em;
-
-    color:
-        rgba(180,192,198,.32);
-
-    transition:
-        color .65s ease,
-        text-shadow .65s ease,
-        transform .65s ease;
+    color: rgba(180,192,198,.4);
+    transition: color 0.5s ease, text-shadow 0.5s ease;
 }
-
-
-/* =========================
-   上一句 / 下一句
-========================= */
 
 .lyric.near {
-    opacity: .36;
-
-    transform:
-        translateX(0)
-        scale(.97);
-
-    filter: blur(0);
+    opacity: .45;
+    transform: scale(0.98);
 }
-
-
-/* =========================
-   ★ 當前歌詞
-========================= */
 
 .lyric.active {
     opacity: 1;
-
-    transform:
-        translateX(10px)
-        scale(1.035);
-
-    filter: blur(0);
+    transform: scale(1.02) translateX(8px);
 }
-
-
-/* 當前日文發光 */
 
 .lyric.active .jp {
     color: #f1f6f7;
-
     text-shadow:
         0 0 5px rgba(235,247,250,.95),
         0 0 12px rgba(205,230,238,.75),
-        0 0 26px rgba(170,210,225,.48),
-        0 0 50px rgba(125,180,205,.25);
-
-    transform:
-        translateY(-1px);
+        0 0 26px rgba(170,210,225,.48);
 }
-
-
-/* 當前中文淡光 */
 
 .lyric.active .zh {
-    color:
-        rgba(225,237,240,.88);
-
-    text-shadow:
-        0 0 8px rgba(195,225,235,.45),
-        0 0 20px rgba(145,195,215,.20);
+    color: rgba(225,237,240,.9);
+    text-shadow: 0 0 8px rgba(195,225,235,.45);
 }
-
-
-/* 當前歌詞左側的小光線 */
 
 .lyric.active::before {
     content: "";
-
     position: absolute;
-
     left: 0;
-
-    width: 2px;
-    height: 48px;
-
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 70%;
     border-radius: 10px;
-
-    background:
-        rgba(225,242,247,.85);
-
-    box-shadow:
-        0 0 8px rgba(210,238,245,.8),
-        0 0 20px rgba(160,210,230,.45);
+    background: rgba(225,242,247,.85);
+    box-shadow: 0 0 8px rgba(210,238,245,.8);
 }
-.lyric.active .zh {
-    color: rgba(235,240,240,.82);
-}
-
-
-/* =========================
-   手機
-========================= */
 
 @media (max-width: 800px) {
-
-    body {
-        overflow: auto;
-    }
-
+    body { overflow: auto; }
     .app {
         height: auto;
         min-height: 100vh;
@@ -536,37 +377,20 @@ button:hover {
         padding: 45px 25px;
         gap: 30px;
     }
-
     .left {
         min-height: 320px;
         justify-content: flex-end;
     }
-
-    h1 {
-        font-size: 52px;
-    }
-
-    .player {
-        width: 100%;
-    }
-
+    h1 { font-size: 52px; }
+    .player { width: 100%; }
     .lyrics-window {
         height: 55vh;
         min-height: 450px;
     }
-
-    .lyric {
-        min-height: 95px;
-    }
 }
-
 </style>
 </head>
-
 <body>
-
-
-<!-- 背景 -->
 
 <div class="background">
     <div class="moon"></div>
@@ -576,195 +400,100 @@ button:hover {
     <div class="rain" id="rain"></div>
 </div>
 
-
-<!-- 主畫面 -->
-
 <main class="app">
-
-
-    <!-- 左邊 -->
-
     <section class="left">
-
-        <div class="small-title">
-            CHARACTER SONG
-        </div>
-
-        <h1>
-            籠夜雨
-        </h1>
-
-        <div class="roman">
-            KAGO YOAME
-        </div>
-
+        <div class="small-title">Asahina Aya</div>
+        <h1>籠夜雨</h1>
         <div class="decor-line"></div>
 
-
-        <!-- 播放器 -->
-
         <div class="player">
-
-            <audio
-                id="audio"
-                src="籠夜雨.mp3"
-                loop>
-            </audio>
-
+            <audio id="audio" src="籠夜雨.mp3" loop></audio>
             <div class="controls">
-
-                <button
-                    class="skip"
-                    id="back">
-                    −10
-                </button>
-
-                <button
-                    class="play"
-                    id="play">
-                    ▶
-                </button>
-
-                <button
-                    class="skip"
-                    id="forward">
-                    +10
-                </button>
-
+                <button class="skip" id="back">−10</button>
+                <button class="play" id="play">▶</button>
+                <button class="skip" id="forward">+10</button>
             </div>
-
-
-            <input
-                id="progress"
-                class="progress"
-                type="range"
-                min="0"
-                max="100"
-                value="0">
-
-
+            <input id="progress" class="progress" type="range" min="0" max="100" value="0">
             <div class="time">
-
-                <span id="current">
-                    00:00
-                </span>
-
-                <span id="duration">
-                    00:00
-                </span>
-
+                <span id="current">00:00</span>
+                <span id="duration">00:00</span>
             </div>
-
         </div>
-
     </section>
-
-
-
-    <!-- 右邊歌詞 -->
 
     <section class="lyrics-window">
-
-        <div
-            class="lyrics"
-            id="lyrics">
-        </div>
-
+        <div class="lyrics" id="lyrics"></div>
     </section>
-
-
 </main>
 
-
 <script>
-
-
-/* =========================================================
-   ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-
-              你的 LRC 歌詞貼在這裡
-
-   格式：
-
-   [00:18.50]日文歌詞
-   [00:18.50]中文翻譯
-
-   同一個時間：
-   第一行 = 日文
-   第二行 = 中文
-
-   ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-========================================================= */
-
-
 const LRC = `
-
-[00:17.55]白檀の香を　身にまとい
-[00:17.55]白檀的香氣　輕落在衣襟
-[00:24.17]鏡に笑みを　ひとつ描く
-[00:24.17]鏡中的笑意　又描深一筆
-[00:31.03]黒髪を梳いて　簪を挿す
-[00:31.03]梳過一頭黑髮　簪進髮髻
-[00:32.79]煙管の灰を　夜に落とす
-[00:32.79]煙管落下的灰　散進夜裡
-[00:41.40]帳面に並ぶ　白い桁
-[00:41.40]帳本之間　排滿一行行數字
-[00:48.43]算盤の珠を　また弾く
-[00:48.43]算盤的珠子　又輕輕撥起
-[00:51.70]自由はすぐに　見えるのに
-[00:51.70]自由明明　已經近在眼底
+[00:17.55]白檀の香を 身にまとい
+[00:17.55]白檀的香氣 輕落在衣襟
+[00:24.17]鏡に笑みを ひとつ描く
+[00:24.17]鏡中的笑意 又描深一筆
+[00:31.03]黒髪を梳いて 簪を挿す
+[00:31.03]梳過一頭黑髮 簪進髮髻
+[00:32.79]煙管の灰を 夜に落とす
+[00:32.79]煙管落下的灰 散進夜裡
+[00:41.40]帳面に並ぶ 白い桁
+[00:41.40]帳本之間 排滿一行行數字
+[00:48.43]算盤の珠を また弾く
+[00:48.43]算盤的珠子 又輕輕撥起
+[00:51.70]自由はすぐに 見えるのに
+[00:51.70]自由明明 已經近在眼底
 [00:55.29]最後の一行
 [00:55.29]最後那一行
 [00:57.60]書けない
 [00:57.60]卻始終寫不下去
-[00:59.60]籠の中だと　言わないで
-[00:59.60]別說我　困在這裡
-[01:02.55]そんな言葉は　ただ嫌い
-[01:02.55]那樣的話　我不願聽
-[01:05.98]鍵はこの手に　あるのなら
-[01:05.98]鑰匙仍在　我的掌心
-[01:09.41]飛ばないだけよ　飛べるから
-[01:09.41]翅膀還在　只是沒有飛起
-[01:13.32]雨の向こうへ　船は行く
-[01:13.32]船穿過雨幕　漸漸遠離
-[01:18.67]これが私の　選んだ未来
-[01:18.67]這就是我　親手選的結局
-[01:53.53]雨降る夜に　指を想う
-[01:53.53]雨落的夜裡　又想起那雙手
-[02:00.39]触れない指が　胸に残る
-[02:00.39]明明沒有觸碰　卻記了那麼久
-[02:07.65]大阪の雨　屋根を打ち
-[02:07.65]大阪的雨　敲著熟悉的窗口
-[02:13.24]基隆の雨　海を隠す
-[02:13.24]基隆的雨　把海藏在霧後
-[02:21.22]汽笛がひとつ　夜を裂く
-[02:21.22]一聲汽笛　劃破沉寂
-[02:24.41]鍵なら今も　手の中に
-[02:24.41]鑰匙如今　仍握在手裡
-[02:27.84]帰る場所さえ　見えぬまま
-[02:27.84]連回去的地方　都看不清晰
+[00:59.60]籠の中だと 言わないで
+[00:59.60]別說我 困在這裡
+[01:02.55]そんな言葉は ただ嫌い
+[01:02.55]那樣的話 我不願聽
+[01:05.98]鍵はこの手に あるのなら
+[01:05.98]鑰匙仍在 我的掌心
+[01:09.41]飛ばないだけよ 飛べるから
+[01:09.41]翅膀還在 只是沒有飛起
+[01:13.32]雨の向こうへ 船は行く
+[01:13.32]船穿過雨幕 漸漸遠離
+[01:18.67]これが私の選んだ未来
+[01:18.67]這就是我 親手選的結局
+[01:53.53]雨降る夜に 指を想う
+[01:53.53]雨落的夜裡 又想起那雙手
+[02:00.39]触れない指が 胸に残る
+[02:00.39]明明沒有觸碰 卻記了那麼久
+[02:07.65]大阪の雨屋根を打ち
+[02:07.65]大阪的雨 敲著熟悉的窗口
+[02:13.24]基隆の雨海を隠す
+[02:13.24]基隆的雨 把海藏在霧後
+[02:21.22]汽笛がひとつ夜を裂く
+[02:21.22]一聲汽笛劃破沉寂
+[02:24.41]鍵なら今も手の中に
+[02:24.41]鑰匙如今 仍握在手裡
+[02:27.84]帰る場所さえ見えぬまま
+[02:27.84]連回去的地方 都看不清晰
 [02:30.79]行き先だけは
-[02:30.79]只是離開以後　要去哪裡
+[02:30.79]只是離開以後 要去哪裡
 [02:33.59]書けない
-[02:33.59]最後一行　仍寫不下去
-[02:35.58]籠の中だと　言わないで
-[02:35.58]別說我　困在這裡
-[02:38.53]そんな言葉は　ただ嫌い
-[02:38.53]那樣的話　我不願聽
-[02:41.96]鍵はこの手に　あるのなら
-[02:41.96]鑰匙仍在　我的掌心
-[02:44.60]飛べるはずなら　なぜ飛ばない
-[02:44.60]既然還能飛　為何沒有飛起
-[02:49.30]雨の向こうへ　船は行く
-[02:49.30]船穿過雨幕　漸漸遠離
-[02:54.65]それでも見てる　遠い未来
-[02:54.65]而我仍望著　遙遠的天際
-[03:02.79]海の彼方は　測れても
-[03:02.79]海有多遠　還能算清
-[03:05.98]帰る場所だけ　測れない
-[03:05.98]回去的地方　卻無法丈量距離
-[03:09.41]道なら今も　見えている
-[03:09.41]前方的路　明明如此清晰
+[02:33.59]最後一行奇蹟寫不下去
+[02:35.58]籠の中だと 言わないで
+[02:35.58]別說我 困在這裡
+[02:38.53]そんな言葉は ただ嫌い
+[02:38.53]那樣的話 我不願聽
+[02:41.96]鍵はこの手にあるのなら
+[02:41.96]鑰匙仍在 my 掌心
+[02:44.60]飛べるはずなら なぜ飛ばない
+[02:44.60]既然還能飛 為何沒有飛起
+[02:49.30]雨の向こうへ 船は行く
+[02:49.30]船穿過雨幕 漸漸遠離
+[02:54.65]それでも見てる遠い未来
+[02:54.65]而我仍望著遙遠的天際
+[03:02.79]海の彼方は 測れても
+[03:02.79]海有多遠 還能算清
+[03:05.98]帰る場所だけ 測れない
+[03:05.98]回去的地方 卻無法丈量距離
+[03:09.41]道なら今も見えている
+[03:09.41]前方的路 明明如此清晰
 [03:12.44]それでも私は
 [03:12.44]可我最後
 [03:14.76]ここにいる
@@ -777,21 +506,7 @@ const LRC = `
 [03:35.34]等這場雨停了
 [03:37.50]港を見に行こうか
 [03:37.50]再去港口看一場雨
-
-
-
-把你的中日 LRC 歌詞貼在這裡
-
-
-
 `;
-
-
-/* =========================================================
-                  ↑↑↑ 歌詞到這裡結束 ↑↑↑
-========================================================= */
-
-
 
 const audio = document.getElementById("audio");
 const playButton = document.getElementById("play");
@@ -805,561 +520,175 @@ const forwardButton = document.getElementById("forward");
 let lyricsData = [];
 let currentIndex = -1;
 
-
-/* =========================
-   解析 LRC
-========================= */
-
 function parseLRC(text) {
-
     const lines = text.split(/\r?\n/);
-
     const map = new Map();
 
     lines.forEach(line => {
-
-        const match = line.match(
-            /\[(\d{1,2}):(\d{2})(?:\.(\d{1,3}))?\](.*)/
-        );
-
-        if (!match) {
-            return;
-        }
+        const match = line.match(/\[(\d{1,2}):(\d{2})(?:\.(\d{1,3}))?\](.*)/);
+        if (!match) return;
 
         const minutes = parseInt(match[1]);
         const seconds = parseInt(match[2]);
-
         let milliseconds = 0;
 
         if (match[3]) {
-
             const part = match[3];
-
-            if (part.length === 1) {
-                milliseconds = parseInt(part) * 100;
-            }
-
-            else if (part.length === 2) {
-                milliseconds = parseInt(part) * 10;
-            }
-
-            else {
-                milliseconds = parseInt(part.slice(0, 3));
-            }
+            if (part.length === 1) milliseconds = parseInt(part) * 100;
+            else if (part.length === 2) milliseconds = parseInt(part) * 10;
+            else milliseconds = parseInt(part.slice(0, 3));
         }
 
-        const time =
-            minutes * 60 +
-            seconds +
-            milliseconds / 1000;
+        const time = minutes * 60 + seconds + milliseconds / 1000;
+        const textContent = match[4].trim();
 
-        const textContent =
-            match[4].trim();
+        if (!textContent) return;
 
-        if (!textContent) {
-            return;
-        }
-
-        const key =
-            time.toFixed(3);
-
+        const key = time.toFixed(3);
         if (!map.has(key)) {
-
-            map.set(key, {
-                time: time,
-                lines: []
-            });
-
+            map.set(key, { time: time, lines: [] });
         }
-
-        map.get(key)
-            .lines
-            .push(textContent);
-
+        map.get(key).lines.push(textContent);
     });
 
-
-    return Array
-        .from(map.values())
+    return Array.from(map.values())
         .map(item => ({
             time: item.time,
             jp: item.lines[0] || "",
             zh: item.lines[1] || ""
         }))
         .sort((a, b) => a.time - b.time);
-
 }
 
-
-/* =========================
-   防止文字破壞 HTML
-========================= */
-
 function escapeHTML(text) {
-
     return text
         .replaceAll("&", "&amp;")
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
-
 }
-
-
-/* =========================
-   建立歌詞
-========================= */
 
 function renderLyrics() {
-
     lyricsElement.innerHTML = "";
-
-    lyricsData.forEach((item, index) => {
-
-        const line =
-            document.createElement("div");
-
-        line.className =
-            "lyric";
-
+    lyricsData.forEach((item) => {
+        const line = document.createElement("div");
+        line.className = "lyric";
         line.innerHTML = `
-            <div class="jp">
-                ${escapeHTML(item.jp)}
-            </div>
-
-            <div class="zh">
-                ${escapeHTML(item.zh)}
-            </div>
+            <div class="jp">${escapeHTML(item.jp)}</div>
+            <div class="zh">${escapeHTML(item.zh)}</div>
         `;
 
+        line.addEventListener("click", () => {
+            audio.currentTime = item.time;
+            audio.play();
+        });
 
-        line.addEventListener(
-            "click",
-            () => {
-
-                audio.currentTime =
-                    item.time;
-
-                audio.play();
-
-            }
-        );
-
-
-        lyricsElement
-            .appendChild(line);
-
+        lyricsElement.appendChild(line);
     });
-
 }
-
-
-/* =========================
-   更新目前歌詞
-========================= */
 
 function updateLyrics() {
+    if (!lyricsData.length) return;
 
-    if (!lyricsData.length) {
-        return;
-    }
-
-    const time =
-        audio.currentTime;
-
+    const time = audio.currentTime;
     let index = -1;
 
-
-    for (
-        let i = lyricsData.length - 1;
-        i >= 0;
-        i--
-    ) {
-
+    for (let i = lyricsData.length - 1; i >= 0; i--) {
         if (time >= lyricsData[i].time) {
-
             index = i;
             break;
-
         }
-
     }
 
+    if (index === currentIndex) return;
+    currentIndex = index;
 
-    if (index === currentIndex) {
-        return;
-    }
-
-
-    currentIndex =
-        index;
-
-
-    const lines =
-        document.querySelectorAll(".lyric");
-
+    const lines = document.querySelectorAll(".lyric");
 
     lines.forEach((line, i) => {
-
-        line.classList.remove(
-            "active",
-            "near"
-        );
-
-
+        line.classList.remove("active", "near");
         if (i === index) {
-
-            line.classList.add(
-                "active"
-            );
-
+            line.classList.add("active");
+        } else if (i === index - 1 || i === index + 1) {
+            line.classList.add("near");
         }
-
-
-        else if (
-            i === index - 1 ||
-            i === index + 1
-        ) {
-
-            line.classList.add(
-                "near"
-            );
-
-        }
-
     });
 
-
-    if (
-        index >= 0 &&
-        lines[index]
-    ) {
-
-        centerLyric(
-            lines[index]
-        );
-
+    if (index >= 0 && lines[index]) {
+        centerLyric(lines[index]);
     }
-
 }
-
-
-/* =========================
-   歌詞自動置中
-========================= */
 
 function centerLyric(line) {
+    const windowElement = document.querySelector(".lyrics-window");
+    const windowHeight = windowElement.clientHeight;
 
-    const windowElement =
-        document.querySelector(".lyrics-window");
+    // 使用 getBoundingClientRect 獲取精確位置，避開 transform 縮放導致的計算誤差
+    const lineCenter = line.offsetTop + (line.offsetHeight / 2);
+    const targetPosition = windowHeight * 0.38; // 調整為畫面的 38% 高度位置，視覺效果最舒服
+    const translateY = targetPosition - lineCenter;
 
-    const windowHeight =
-        windowElement.clientHeight;
-
-    const lineCenter =
-        line.offsetTop +
-        line.offsetHeight / 2;
-
-    /*
-       0.40 = 當前歌詞位於畫面高度 40%
-
-       想再高：
-       改成 0.36
-
-       想再低：
-       改成 0.44
-    */
-
-    const targetPosition =
-        windowHeight * 0.40;
-
-    const translateY =
-        targetPosition - lineCenter;
-
-    lyricsElement.style.transform =
-        `translate3d(0, ${translateY}px, 0)`;
+    lyricsElement.style.transform = `translate3d(0, ${translateY}px, 0)`;
 }
 
-/* =========================
-   播放
-========================= */
+playButton.addEventListener("click", () => {
+    if (audio.paused) audio.play();
+    else audio.pause();
+});
 
-playButton.addEventListener(
-    "click",
-    () => {
+audio.addEventListener("play", () => { playButton.textContent = "❚❚"; });
+audio.addEventListener("pause", () => { playButton.textContent = "▶"; });
 
-        if (audio.paused) {
+backButton.addEventListener("click", () => {
+    audio.currentTime = Math.max(0, audio.currentTime - 10);
+});
 
-            audio.play();
+forwardButton.addEventListener("click", () => {
+    audio.currentTime = Math.min(audio.duration || Infinity, audio.currentTime + 10);
+});
 
-        }
+audio.addEventListener("loadedmetadata", () => {
+    durationLabel.textContent = formatTime(audio.duration);
+});
 
-        else {
-
-            audio.pause();
-
-        }
-
+audio.addEventListener("timeupdate", () => {
+    if (Number.isFinite(audio.duration)) {
+        progress.value = (audio.currentTime / audio.duration) * 100;
     }
-);
+    currentLabel.textContent = formatTime(audio.currentTime);
+    updateLyrics();
+});
 
-
-audio.addEventListener(
-    "play",
-    () => {
-
-        playButton.textContent =
-            "❚❚";
-
-    }
-);
-
-
-audio.addEventListener(
-    "pause",
-    () => {
-
-        playButton.textContent =
-            "▶";
-
-    }
-);
-
-
-/* =========================
-   前後 10 秒
-========================= */
-
-backButton.addEventListener(
-    "click",
-    () => {
-
-        audio.currentTime =
-            Math.max(
-                0,
-                audio.currentTime - 10
-            );
-
-    }
-);
-
-
-forwardButton.addEventListener(
-    "click",
-    () => {
-
-        audio.currentTime =
-            Math.min(
-                audio.duration || Infinity,
-                audio.currentTime + 10
-            );
-
-    }
-);
-
-
-/* =========================
-   音樂載入
-========================= */
-
-audio.addEventListener(
-    "loadedmetadata",
-    () => {
-
-        durationLabel.textContent =
-            formatTime(
-                audio.duration
-            );
-
-    }
-);
-
-
-/* =========================
-   播放進度
-========================= */
-
-audio.addEventListener(
-    "timeupdate",
-    () => {
-
-        if (
-            Number.isFinite(
-                audio.duration
-            )
-        ) {
-
-            progress.value =
-                (
-                    audio.currentTime /
-                    audio.duration
-                ) * 100;
-
-        }
-
-
-        currentLabel.textContent =
-            formatTime(
-                audio.currentTime
-            );
-
-
-        updateLyrics();
-
-    }
-);
-
-
-/* =========================
-   拖動進度條
-========================= */
-
-progress.addEventListener(
-    "input",
-    () => {
-
-        if (
-            !Number.isFinite(
-                audio.duration
-            )
-        ) {
-
-            return;
-
-        }
-
-
-        audio.currentTime =
-            (
-                progress.value / 100
-            ) *
-            audio.duration;
-
-    }
-);
-
-
-/* =========================
-   時間格式
-========================= */
+progress.addEventListener("input", () => {
+    if (!Number.isFinite(audio.duration)) return;
+    audio.currentTime = (progress.value / 100) * audio.duration;
+});
 
 function formatTime(seconds) {
-
-    if (
-        !Number.isFinite(seconds)
-    ) {
-
-        return "00:00";
-
-    }
-
-
-    const minute =
-        Math.floor(
-            seconds / 60
-        );
-
-
-    const second =
-        Math.floor(
-            seconds % 60
-        );
-
-
-    return (
-        String(minute)
-            .padStart(2, "0")
-        +
-        ":"
-        +
-        String(second)
-            .padStart(2, "0")
-    );
-
+    if (!Number.isFinite(seconds)) return "00:00";
+    const minute = Math.floor(seconds / 60);
+    const second = Math.floor(seconds % 60);
+    return `${String(minute).padStart(2, "0")}:${String(second).padStart(2, "0")}`;
 }
-
-
-/* =========================
-   雨
-========================= */
 
 function createRain() {
-
-    const rain =
-        document.getElementById(
-            "rain"
-        );
-
-
-    for (
-        let i = 0;
-        i < 85;
-        i++
-    ) {
-
-        const drop =
-            document.createElement(
-                "div"
-            );
-
-
-        drop.className =
-            "drop";
-
-
-        drop.style.left =
-            Math.random() * 120 + "%";
-
-
-        drop.style.height =
-            (
-                40 +
-                Math.random() * 90
-            ) + "px";
-
-
-        drop.style.opacity =
-            (
-                .05 +
-                Math.random() * .25
-            );
-
-
-        drop.style.animationDuration =
-            (
-                .7 +
-                Math.random() * 1.4
-            ) + "s";
-
-
-        drop.style.animationDelay =
-            (
-                Math.random() * -5
-            ) + "s";
-
-
-        rain.appendChild(
-            drop
-        );
-
+    const rain = document.getElementById("rain");
+    for (let i = 0; i < 85; i++) {
+        const drop = document.createElement("div");
+        drop.className = "drop";
+        drop.style.left = Math.random() * 120 + "%";
+        drop.style.height = (40 + Math.random() * 90) + "px";
+        drop.style.opacity = (.05 + Math.random() * .25);
+        drop.style.animationDuration = (.7 + Math.random() * 1.4) + "s";
+        drop.style.animationDelay = (Math.random() * -5) + "s";
+        rain.appendChild(drop);
     }
-
 }
 
-
-/* =========================
-   啟動
-========================= */
-
-lyricsData =
-    parseLRC(LRC);
-
+lyricsData = parseLRC(LRC);
 renderLyrics();
-
 createRain();
-
-
 </script>
 
 </body>
