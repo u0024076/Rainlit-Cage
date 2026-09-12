@@ -198,7 +198,11 @@ h1 {
     font-size: clamp(48px, 6vw, 82px);
     letter-spacing: .18em;
     line-height: 1;
-    text-shadow: 0 0 30px rgba(220,230,235,.12);
+    text-shadow:
+    0 0 5px rgba(235,247,250,.95),
+    0 0 12px rgba(205,230,238,.75),
+    0 0 26px rgba(170,210,225,.48),
+    0 0 50px rgba(125,180,205,.25);
 }
 
 .roman {
@@ -295,7 +299,7 @@ button:hover {
 
 
 /* =========================
-   歌詞
+   動態歌詞區
 ========================= */
 
 .lyrics-window {
@@ -303,76 +307,212 @@ button:hover {
     height: 100%;
     overflow: hidden;
 
-    mask-image: linear-gradient(
-        to bottom,
-        transparent 0%,
-        black 15%,
-        black 85%,
-        transparent 100%
-    );
-
+    /* 上下漸隱 */
     -webkit-mask-image: linear-gradient(
         to bottom,
         transparent 0%,
-        black 15%,
-        black 85%,
+        rgba(0,0,0,.35) 8%,
+        black 20%,
+        black 72%,
+        rgba(0,0,0,.4) 88%,
+        transparent 100%
+    );
+
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0,0,0,.35) 8%,
+        black 20%,
+        black 72%,
+        rgba(0,0,0,.4) 88%,
         transparent 100%
     );
 }
+
+
+/* 整組歌詞 */
 
 .lyrics {
     position: absolute;
     width: 100%;
-    top: 50%;
-    transition: transform .7s cubic-bezier(.25,.8,.25,1);
+    top: 0;
+
+    will-change: transform;
+
+    transition:
+        transform 0.85s
+        cubic-bezier(.22,.8,.25,1);
 }
+
+
+/* 每一句 */
 
 .lyric {
-    min-height: 105px;
-    padding: 17px 20px;
-    opacity: .14;
-    transform: scale(.94);
-    transform-origin: left center;
-    transition:
-        opacity .5s ease,
-        transform .5s ease;
+    min-height: 108px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 15px 24px;
+
+    opacity: 0.10;
+
+    transform:
+        translateX(-8px)
+        scale(.94);
+
+    transform-origin:
+        left center;
+
+    filter: blur(.25px);
+
     cursor: pointer;
+
+    transition:
+        opacity .65s ease,
+        transform .65s ease,
+        filter .65s ease;
 }
 
-.lyric.near {
-    opacity: .35;
+
+/* =========================
+   日文
+========================= */
+
+.jp {
+    font-family:
+        "Noto Serif JP",
+        "Yu Mincho",
+        serif;
+
+    font-size:
+        clamp(21px, 2.15vw, 31px);
+
+    font-weight: 400;
+
+    line-height: 1.55;
+
+    letter-spacing: .08em;
+
+    color:
+        rgba(205,215,220,.48);
+
+    transition:
+        color .65s ease,
+        text-shadow .65s ease,
+        transform .65s ease;
 }
+
+
+/* =========================
+   中文
+========================= */
+
+.zh {
+    margin-top: 8px;
+
+    font-family:
+        "Noto Serif TC",
+        "PingFang TC",
+        serif;
+
+    font-size:
+        clamp(13px, 1.15vw, 17px);
+
+    line-height: 1.65;
+
+    letter-spacing: .1em;
+
+    color:
+        rgba(180,192,198,.32);
+
+    transition:
+        color .65s ease,
+        text-shadow .65s ease,
+        transform .65s ease;
+}
+
+
+/* =========================
+   上一句 / 下一句
+========================= */
+
+.lyric.near {
+    opacity: .36;
+
+    transform:
+        translateX(0)
+        scale(.97);
+
+    filter: blur(0);
+}
+
+
+/* =========================
+   ★ 當前歌詞
+========================= */
 
 .lyric.active {
     opacity: 1;
-    transform: scale(1);
+
+    transform:
+        translateX(10px)
+        scale(1.035);
+
+    filter: blur(0);
 }
 
 
-/* 日文歌詞 */
-
-.jp {
-    font-family: "Noto Serif JP", "Yu Mincho", serif;
-    font-size: clamp(20px, 2vw, 29px);
-    line-height: 1.5;
-    letter-spacing: .07em;
-}
+/* 當前日文發光 */
 
 .lyric.active .jp {
-    text-shadow: 0 0 18px rgba(220,230,235,.18);
+    color: #f1f6f7;
+
+    text-shadow:
+        0 0 5px rgba(235,247,250,.95),
+        0 0 12px rgba(205,230,238,.75),
+        0 0 26px rgba(170,210,225,.48),
+        0 0 50px rgba(125,180,205,.25);
+
+    transform:
+        translateY(-1px);
 }
 
 
-/* 中文翻譯 */
+/* 當前中文淡光 */
 
-.zh {
-    margin-top: 7px;
-    font-size: clamp(13px, 1.1vw, 16px);
-    line-height: 1.6;
-    letter-spacing: .08em;
-    color: rgba(220,225,230,.55);
+.lyric.active .zh {
+    color:
+        rgba(225,237,240,.88);
+
+    text-shadow:
+        0 0 8px rgba(195,225,235,.45),
+        0 0 20px rgba(145,195,215,.20);
 }
 
+
+/* 當前歌詞左側的小光線 */
+
+.lyric.active::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    width: 2px;
+    height: 48px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(225,242,247,.85);
+
+    box-shadow:
+        0 0 8px rgba(210,238,245,.8),
+        0 0 20px rgba(160,210,230,.45);
+}
 .lyric.active .zh {
     color: rgba(235,240,240,.82);
 }
@@ -912,25 +1052,34 @@ function updateLyrics() {
 function centerLyric(line) {
 
     const windowElement =
-        document.querySelector(
-            ".lyrics-window"
-        );
+        document.querySelector(".lyrics-window");
 
-
-    const center =
-        windowElement.clientHeight / 2;
-
+    const windowHeight =
+        windowElement.clientHeight;
 
     const lineCenter =
         line.offsetTop +
         line.offsetHeight / 2;
 
+    /*
+       0.40 = 當前歌詞位於畫面高度 40%
+
+       想再高：
+       改成 0.36
+
+       想再低：
+       改成 0.44
+    */
+
+    const targetPosition =
+        windowHeight * 0.40;
+
+    const translateY =
+        targetPosition - lineCenter;
 
     lyricsElement.style.transform =
-        `translateY(${center - lineCenter}px)`;
-
+        `translate3d(0, ${translateY}px, 0)`;
 }
-
 
 /* =========================
    播放
